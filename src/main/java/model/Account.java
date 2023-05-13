@@ -3,49 +3,69 @@ package model;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Getter
 public class Account {
-    private ArrayList<Operation> operations;
+    private final ArrayList<Operation> operations;
     private double balance;
+
 
     public Account(){
         operations = new ArrayList<>();
+        balance = 0.0;
     }
 
     public void deposit(Operation operation) {
         operations.add(operation);
-        balance += operation.getAmount();
+        increaseAmount(operation.getAmount());
     }
-
+    private void increaseAmount(Double amount){
+        balance += amount;
+    }
 
     public List<Operation> getOperationsBySpecificDate(LocalDate date) {
-       return operations
-                .stream()
-                .filter(operation -> operation.getDate().equals(date))
-                .collect(Collectors.toList());
+        return getOperationsByFilter(operation -> operation.getDate().equals(date));
     }
 
-    public List<Operation> getOperationsBefore(LocalDate date) {
+    public List<Operation> getOperationsBeforeDate(LocalDate date) {
+        return getOperationsByFilter(operation -> operation.getDate().isBefore(date));
+    }
+
+    public List<Operation> getOperationsAfterDate(LocalDate date) {
+        return getOperationsByFilter(operation -> operation.getDate().isAfter(date));
+    }
+
+    private List<Operation> getOperationsByFilter(Predicate<Operation> predicate){
         return operations
                 .stream()
-                .filter(operation -> operation.getDate().isBefore(date))
+                .filter(predicate)
                 .collect(Collectors.toList());
     }
 
-    public List<Operation> getOperationsAfter(LocalDate date) {
-        return operations
+    public String showHistory(){
+        TreeMap<Operation, Double> history = generateHistory();
+        return history
+                .entrySet()
                 .stream()
-                .filter(operation -> operation.getDate().isAfter(date))
-                .collect(Collectors.toList());
+                .map(operationDoubleEntry -> String.format("%s - balance = %.2f$\n", operationDoubleEntry.getKey(), operationDoubleEntry.getValue()))
+                .collect(Collectors.joining(","));
     }
 
-    @Override
-    public String toString(){
-        return "***** Account ***** \n" + "balance : " + this.getBalance()
-                + "$\noperations : " + this.getOperations().toString() + "\n";
+    private TreeMap<Operation, Double> generateHistory(){
+        operations.sort(Collections.reverseOrder());
+        TreeMap<Operation, Double> history = new TreeMap<>();
+//        operations
+//                .stream()
+//                .reduce(0.0, (amount, operation) -> history.put(operation, (amount + operation.getAmount()) ) ,history));
+
+        double balance = 0.0;
+        for(Operation operation: operations) {
+            balance += operation.getAmount();
+            history.put(operation, balance);
+        }
+        return history;
     }
 }

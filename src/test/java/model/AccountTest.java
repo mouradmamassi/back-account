@@ -40,8 +40,8 @@ public class AccountTest {
         account.deposit(operation3);
         account.deposit(operation4);
         List<Operation> operationsListBySpecificDate = account.getOperationsBySpecificDate(LocalDate.of(2023, 05, 12));
-        List<Operation> operationsListBefore = account.getOperationsBefore(LocalDate.of(2023, 05, 12));
-        List<Operation> operationsListAfter = account.getOperationsAfter(LocalDate.of(2023, 05, 12));
+        List<Operation> operationsListBefore = account.getOperationsBeforeDate(LocalDate.of(2023, 05, 12));
+        List<Operation> operationsListAfter = account.getOperationsAfterDate(LocalDate.of(2023, 05, 12));
 
         //assert
         Assert.assertEquals(2, operationsListBySpecificDate.size());
@@ -71,10 +71,10 @@ public class AccountTest {
     }
 
     @Test
-    public void toStringTest(){
+    public void showHistory() {
         //arrange
         Operation operation1 = new Operation(12.3, LocalDate.of(2023, 05, 12));
-        Operation operation2 = new Operation(14.7, LocalDate.of(2023, 05, 12));
+        Operation operation2 = new Operation(14.7, LocalDate.of(2023, 03, 12));
         Operation operation3 = new Operation(177.7, LocalDate.of(2023, 04, 12));
         Operation operation4 = new Operation(155.7, LocalDate.of(2023, 06, 12));
 
@@ -83,12 +83,11 @@ public class AccountTest {
         account.deposit(operation2);
         account.deposit(operation3);
         account.deposit(operation4);
-        Assert.assertEquals("***** Account ***** \n" +
-                "balance : 360.4$\n" +
-                "operations : [amount = 12,30$ - date = 2023-05-12 - balance = 12,30$\n" +
-                ", amount = 14,70$ - date = 2023-05-12 - balance = 14,70$\n" +
-                ", amount = 177,70$ - date = 2023-04-12 - balance = 177,70$\n" +
-                ", amount = 155,70$ - date = 2023-06-12 - balance = 155,70$\n" +
-                "]\n", account.toString());
+
+        //assert
+        Assert.assertEquals("amount = 155,70$ - date = 2023-06-12 - balance = 360,40$\n" +
+                ",amount = 12,30$ - date = 2023-05-12 - balance = 204,70$\n" +
+                ",amount = 177,70$ - date = 2023-04-12 - balance = 192,40$\n" +
+                ",amount = 14,70$ - date = 2023-03-12 - balance = 14,70$\n", account.showHistory());
     }
 }
