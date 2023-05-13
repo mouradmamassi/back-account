@@ -1,3 +1,4 @@
 # bank-account
 
-To see covrage code please run -> mvn clean install
+To see coverage code please run -> mvn clean install
+![Alt text](img.png?raw=true "coverage")
