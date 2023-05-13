@@ -20,6 +20,8 @@ public class AccountMain {
         account.deposit(operation3);
         account.deposit(operation4);
 
+        // get balance
+        System.out.printf("Account balance : %.2f$\n", account.getBalance());
         //show history of operations
         System.out.println(account.showHistory());
     }

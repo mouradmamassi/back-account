@@ -85,9 +85,9 @@ public class AccountTest {
         account.deposit(operation4);
 
         //assert
-        Assert.assertEquals("amount = 155,70$ - date = 2023-06-12 - balance = 360,40$\n" +
-                ",amount = 12,30$ - date = 2023-05-12 - balance = 204,70$\n" +
-                ",amount = 177,70$ - date = 2023-04-12 - balance = 192,40$\n" +
-                ",amount = 14,70$ - date = 2023-03-12 - balance = 14,70$\n", account.showHistory());
+        Assert.assertEquals("Operation (amount = 155,70$ - date = 2023-06-12) - balance = 360,40$\n" +
+                ",Operation (amount = 12,30$ - date = 2023-05-12) - balance = 204,70$\n" +
+                ",Operation (amount = 177,70$ - date = 2023-04-12) - balance = 192,40$\n" +
+                ",Operation (amount = 14,70$ - date = 2023-03-12) - balance = 14,70$\n", account.showHistory());
     }
 }

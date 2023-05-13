@@ -17,7 +17,7 @@ public class Operation implements Comparable<Operation>{
 
     @Override
     public String toString(){
-        return String.format("amount = %.2f$ - date = %s",
+        return String.format("Operation (amount = %.2f$ - date = %s)",
                 this.amount, this.date);
     }
 
