@@ -21,6 +21,6 @@ public class AccountMain {
         account.deposit(operation4);
 
         //show history of operations
-        System.out.println(account);
+        System.out.println(account.showHistory());
     }
 }

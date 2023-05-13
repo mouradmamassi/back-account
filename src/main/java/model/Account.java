@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -57,10 +58,6 @@ public class Account {
     private TreeMap<Operation, Double> generateHistory(){
         operations.sort(Collections.reverseOrder());
         TreeMap<Operation, Double> history = new TreeMap<>();
-//        operations
-//                .stream()
-//                .reduce(0.0, (amount, operation) -> history.put(operation, (amount + operation.getAmount()) ) ,history));
-
         double balance = 0.0;
         for(Operation operation: operations) {
             balance += operation.getAmount();
